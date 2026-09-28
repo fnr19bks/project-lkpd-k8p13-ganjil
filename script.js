@@ -1,6 +1,6 @@
 /* ⚙️ TUNABLE PARAMETERS */
 const MAX_SCORE_PER_LEVEL = 100;
-const TIMER_ENABLED = false; // Ubah ke true jika ingin menambahkan timer
+const TIMER_ENABLED = false;
 const DEFAULT_LANGUAGE = 'id';
 
 // Data Game (Bilingual)
@@ -243,7 +243,10 @@ const els = {
     refQ3: document.getElementById('ref-q3'),
     btnPrint: document.getElementById('btn-print'),
     btnRestart: document.getElementById('btn-restart'),
-    confettiCanvas: document.getElementById('confetti-canvas')
+    confettiCanvas: document.getElementById('confetti-canvas'),
+    hintModal: document.getElementById('hint-modal'),
+    hintText: document.getElementById('hint-text'),
+    closeHint: document.getElementById('close-hint')
 };
 
 // Initialize Game
@@ -263,10 +266,33 @@ function setupEventListeners() {
     els.btnRestart.addEventListener('click', resetGame);
     els.btnPrint.addEventListener('click', () => window.print());
     
-    // Hint Modal
-    document.getElementById('close-hint').addEventListener('click', () => {
-        document.getElementById('hint-modal').style.display = 'none';
+    // Hint Buttons
+    document.getElementById('hint-btn-1').addEventListener('click', () => showHint(1));
+    document.getElementById('hint-btn-2').addEventListener('click', () => showHint(2));
+    document.getElementById('hint-btn-3').addEventListener('click', () => showHint(3));
+    
+    // Close Hint Modal
+    els.closeHint.addEventListener('click', () => {
+        els.hintModal.style.display = 'none';
     });
+    
+    // Close modal when clicking outside
+    window.addEventListener('click', (e) => {
+        if (e.target === els.hintModal) {
+            els.hintModal.style.display = 'none';
+        }
+    });
+}
+
+// Show Hint
+function showHint(level) {
+    let hintText = "";
+    if (level === 1) hintText = gameData[currentLang].l1.hint;
+    else if (level === 2) hintText = gameData[currentLang].l2.hint;
+    else if (level === 3) hintText = gameData[currentLang].l3.hint;
+    
+    els.hintText.textContent = hintText;
+    els.hintModal.style.display = 'flex';
 }
 
 // Language System
@@ -274,7 +300,7 @@ function toggleLanguage() {
     currentLang = currentLang === 'id' ? 'en' : 'id';
     els.langToggle.textContent = currentLang === 'id' ? 'ID' : 'EN';
     updateUILanguage();
-    renderLevel1(); // Re-render to update text
+    renderLevel1();
     if (currentLevel === 2) renderLevel2();
     if (currentLevel === 3) renderLevel3();
     if (currentLevel === 4) renderResult();
@@ -286,7 +312,6 @@ function updateUILanguage() {
     els.lblLevel.textContent = lang.level;
     els.lblScore.textContent = lang.score;
     
-    // Update static texts based on current level
     if (currentLevel === 1) {
         els.l1Title.textContent = lang.l1.title;
         els.l1Desc.textContent = lang.l1.desc;
@@ -368,10 +393,10 @@ function submitLevel1() {
     
     if (allCorrect) {
         playSound('correct');
-        score += MAX_SCORE_PER_LEVEL;
+        score += 300; // 3 correct answers * 100
     } else {
         playSound('wrong');
-        score = Math.max(0, score - 20);
+        score = Math.max(0, score - 50);
         els.l1Options.classList.add('shake');
         setTimeout(() => els.l1Options.classList.remove('shake'), 400);
     }
@@ -389,7 +414,6 @@ function submitLevel1() {
 
 // Level 2 Logic
 function renderLevel2() {
-    const lang = gameData[currentLang].l2;
     currentL2Question = 0;
     showL2Question();
 }
@@ -418,12 +442,12 @@ function checkL2Answer(btn, selectedIndex, correctIndex) {
     if (selectedIndex === correctIndex) {
         btn.classList.add('correct');
         playSound('correct');
-        score += MAX_SCORE_PER_LEVEL / 3; // Divide score among 3 questions
+        score += 100; // 100 points per correct answer
     } else {
         btn.classList.add('wrong');
         buttons[correctIndex].classList.add('correct');
         playSound('wrong');
-        score = Math.max(0, score - 10);
+        score = Math.max(0, score - 20);
     }
     
     updateScore();
@@ -467,13 +491,11 @@ function selectL3Step(div) {
     if (isL3Sorted) return;
     
     if (div.classList.contains('selected')) {
-        // Unselect
         div.classList.remove('selected');
         div.querySelector('.order-num').textContent = '?';
         const index = l3Order.indexOf(div.dataset.text);
         if (index > -1) l3Order.splice(index, 1);
     } else {
-        // Select
         if (l3Order.length < 5) {
             l3Order.push(div.dataset.text);
             div.classList.add('selected');
@@ -481,7 +503,6 @@ function selectL3Step(div) {
         }
     }
     
-    // Re-number all selected
     const allItems = els.l3Steps.querySelectorAll('.sortable-item');
     allItems.forEach(item => {
         const idx = l3Order.indexOf(item.dataset.text);
@@ -520,10 +541,10 @@ function submitLevel3() {
     
     if (allCorrect) {
         playSound('correct');
-        score += MAX_SCORE_PER_LEVEL;
+        score += 400; // 4 steps * 100
     } else {
         playSound('wrong');
-        score = Math.max(0, score - 20);
+        score = Math.max(0, score - 50);
         els.l3Steps.classList.add('shake');
         setTimeout(() => els.l3Steps.classList.remove('shake'), 400);
     }
@@ -547,11 +568,11 @@ function renderResult() {
     let badge = "";
     let message = "";
     
-    if (score >= 280) {
+    if (score >= 1000) {
         badge = "🏆 Detektif Agung (Great Detective)";
         message = lang.feedback.perfect;
         triggerConfetti();
-    } else if (score >= 200) {
+    } else if (score >= 700) {
         badge = "🥈 Detektif Andal (Skilled Detective)";
         message = lang.feedback.good;
     } else {
@@ -608,7 +629,6 @@ function showLevel(level) {
     
     els.currentLevelDisplay.textContent = `${Math.min(level, 3)} / 3`;
     
-    // Update progress bar
     const progress = ((level - 1) / 3) * 100;
     els.progressBar.style.width = `${progress}%`;
     
