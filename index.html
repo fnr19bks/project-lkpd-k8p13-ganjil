@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detektif Digital: Misi Pencarian Efektif</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="app-header">
+        <div class="header-left">
+            <img src="logo.png" alt="Logo SMPN 19 Bekasi" id="school-logo" onerror="this.style.display='none'">
+            <h1 id="app-title">Detektif Digital</h1>
+        </div>
+        <div class="header-right">
+            <button id="lang-toggle" class="btn-lang">ID</button>
+        </div>
+    </header>
+
+    <main class="app-container">
+        <!-- HUD (Heads Up Display) -->
+        <section class="hud">
+            <div class="hud-item">
+                <span class="hud-label" id="lbl-level">Misi</span>
+                <span class="hud-value" id="current-level-display">1 / 3</span>
+            </div>
+            <div class="hud-item">
+                <span class="hud-label" id="lbl-score">Skor</span>
+                <span class="hud-value" id="score-display">0</span>
+            </div>
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="progress-bar" style="width: 0%;"></div>
+            </div>
+        </section>
+
+        <!-- Game Area -->
+        <section id="game-area" class="game-area">
+            <!-- Level 1 -->
+            <div id="level-1" class="level-screen active">
+                <h2 class="level-title" id="l1-title">Level 1: Tajamkan Kata Kunci</h2>
+                <p class="level-desc" id="l1-desc">Pilih 3 kata kunci yang paling efektif untuk mencari informasi tentang "AI untuk tugas sekolah".</p>
+                <div class="options-grid" id="l1-options"></div>
+                <button id="l1-submit" class="btn-primary" disabled>Periksa Jawaban</button>
+            </div>
+
+            <!-- Level 2 -->
+            <div id="level-2" class="level-screen">
+                <h2 class="level-title" id="l2-title">Level 2: Bedah Sumber</h2>
+                <p class="level-desc" id="l2-desc">Perhatikan dua sumber berikut. Jawab pertanyaan dengan teliti.</p>
+                <div class="sources-container">
+                    <div class="source-card" id="source-a">
+                        <h3 id="src-a-title">Sumber A</h3>
+                        <div class="source-content" id="src-a-content"></div>
+                    </div>
+                    <div class="source-card" id="source-b">
+                        <h3 id="src-b-title">Sumber B</h3>
+                        <div class="source-content" id="src-b-content"></div>
+                    </div>
+                </div>
+                <div id="l2-question-container" class="question-container">
+                    <p id="l2-question-text" class="question-text"></p>
+                    <div class="options-list" id="l2-options"></div>
+                </div>
+                <button id="l2-next" class="btn-primary" style="display:none;">Lanjut</button>
+            </div>
+
+            <!-- Level 3 -->
+            <div id="level-3" class="level-screen">
+                <h2 class="level-title" id="l3-title">Level 3: Periksa Viral</h2>
+                <p class="level-desc" id="l3-desc">Klaim Viral: "Aplikasi X dapat membuat baterai ponsel awet dua kali lebih lama hanya dengan mengaktifkan satu pengaturan."</p>
+                <p class="instruction" id="l3-instruction">Susun langkah pemeriksaan dengan mengklik urutan yang benar dari atas ke bawah.</p>
+                <div class="sortable-list" id="l3-steps"></div>
+                <button id="l3-submit" class="btn-primary" disabled>Periksa Urutan</button>
+            </div>
+
+            <!-- Result Screen -->
+            <div id="result-screen" class="level-screen">
+                <div class="result-card">
+                    <h2 id="result-title">Misi Selesai!</h2>
+                    <div class="badge-container">
+                        <span id="badge-icon" class="badge-icon">🏅</span>
+                        <h3 id="badge-name">Detektif Pemula</h3>
+                    </div>
+                    <p id="result-score-text">Total Skor: <span id="final-score">0</span></p>
+                    <p id="result-message">Kerja bagus! Terus asah kemampuanmu.</p>
+                    
+                    <div class="reflection-section">
+                        <h3 id="reflection-title">Refleksi Diri</h3>
+                        <div class="reflection-item">
+                            <label id="ref-q1">Apa kata kunci yang paling membantu?</label>
+                            <textarea id="ref-ans1" rows="2"></textarea>
+                        </div>
+                        <div class="reflection-item">
+                            <label id="ref-q2">Sumber mana yang paling relevan dan mengapa?</label>
+                            <textarea id="ref-ans2" rows="2"></textarea>
+                        </div>
+                        <div class="reflection-item">
+                            <label id="ref-q3">Apa yang akan saya lakukan berbeda pada pencarian berikutnya?</label>
+                            <textarea id="ref-ans3" rows="2"></textarea>
+                        </div>
+                        <button id="btn-print" class="btn-secondary">Cetak Hasil</button>
+                    </div>
+                    <button id="btn-restart" class="btn-primary mt-4">Main Lagi</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Hint Modal -->
+        <div id="hint-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal" id="close-hint">&times;</span>
+                <h3 id="hint-title">Petunjuk</h3>
+                <p id="hint-text"></p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="app-footer">
+        <p>LKPD Informatika Kelas 8 · Pencarian Efektif dan Kredibilitas Sumber · © 2026 SMP Negeri 19 Kota Bekasi</p>
+    </footer>
+
+    <canvas id="confetti-canvas"></canvas>
+    <script src="script.js"></script>
+</body>
+</html>
