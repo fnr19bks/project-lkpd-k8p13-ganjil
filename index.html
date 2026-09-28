@@ -14,7 +14,9 @@
 
     <header class="app-header">
         <div class="header-left">
-            <img src="logo.png" alt="Logo SMPN 19 Bekasi" id="school-logo" onerror="this.style.display='none'">
+            <!-- Logo dengan Fallback Teks -->
+            <img src="logo.png" alt="Logo SMPN 19 Bekasi" id="school-logo" onerror="this.style.display='none'; document.getElementById('logo-fallback').style.display='flex';">
+            <div id="logo-fallback">SMPN<br>19</div>
             <h1 id="app-title">Detektif Digital</h1>
         </div>
         <div class="header-right">
@@ -45,7 +47,10 @@
                 <h2 class="level-title" id="l1-title">Level 1: Tajamkan Kata Kunci</h2>
                 <p class="level-desc" id="l1-desc">Pilih 3 kata kunci yang paling efektif untuk mencari informasi tentang "AI untuk tugas sekolah".</p>
                 <div class="options-grid" id="l1-options"></div>
-                <button id="l1-submit" class="btn-primary" disabled>Periksa Jawaban</button>
+                <div class="button-group">
+                    <button id="hint-btn-1" class="btn-hint">💡 Petunjuk</button>
+                    <button id="l1-submit" class="btn-primary" disabled>Periksa Jawaban</button>
+                </div>
             </div>
 
             <!-- Level 2 -->
@@ -66,7 +71,10 @@
                     <p id="l2-question-text" class="question-text"></p>
                     <div class="options-list" id="l2-options"></div>
                 </div>
-                <button id="l2-next" class="btn-primary" style="display:none;">Lanjut</button>
+                <div class="button-group">
+                    <button id="hint-btn-2" class="btn-hint">💡 Petunjuk</button>
+                    <button id="l2-next" class="btn-primary" style="display:none;">Lanjut</button>
+                </div>
             </div>
 
             <!-- Level 3 -->
@@ -75,7 +83,10 @@
                 <p class="level-desc" id="l3-desc">Klaim Viral: "Aplikasi X dapat membuat baterai ponsel awet dua kali lebih lama hanya dengan mengaktifkan satu pengaturan."</p>
                 <p class="instruction" id="l3-instruction">Susun langkah pemeriksaan dengan mengklik urutan yang benar dari atas ke bawah.</p>
                 <div class="sortable-list" id="l3-steps"></div>
-                <button id="l3-submit" class="btn-primary" disabled>Periksa Urutan</button>
+                <div class="button-group">
+                    <button id="hint-btn-3" class="btn-hint">💡 Petunjuk</button>
+                    <button id="l3-submit" class="btn-primary" disabled>Periksa Urutan</button>
+                </div>
             </div>
 
             <!-- Result Screen -->
@@ -114,7 +125,7 @@
         <div id="hint-modal" class="modal">
             <div class="modal-content">
                 <span class="close-modal" id="close-hint">&times;</span>
-                <h3 id="hint-title">Petunjuk</h3>
+                <h3 id="hint-title">💡 Petunjuk</h3>
                 <p id="hint-text"></p>
             </div>
         </div>
