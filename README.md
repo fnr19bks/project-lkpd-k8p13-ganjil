@@ -8,7 +8,7 @@ Pastikan Anda sudah memiliki 5 file berikut di dalam satu folder di komputer And
 2. `style.css`
 3. `script.js`
 4. `favicon.svg`
-5. `logo.png` (File logo SMPN 19 Bekasi. Jika belum ada, sementara bisa dikosongkan, nanti akan muncul tulisan "Logo SMPN 19" sebagai gantinya).
+5. `logo.png` (File logo SMPN 19 Bekasi. Jika belum ada, aplikasi akan menampilkan teks "SMPN 19" sebagai gantinya).
 
 ---
 
@@ -56,4 +56,9 @@ Jika Anda ingin mengganti logo di kemudian hari:
 5. Klik **Commit changes**.
 
 ---
-*Catatan: Aplikasi ini menyimpan skor dan progres siswa secara lokal di browser mereka (Local Storage). Jika siswa membuka di perangkat yang berbeda atau menghapus riwayat browser, skor akan tereset.*
+### Catatan Penting:
+- **Tombol Petunjuk (Hint):** Setiap level memiliki tombol 💡 Petunjuk yang bisa diklik siswa jika mereka bingung. Petunjuk ini berisi tips dari materi.
+- **Favicon:** Ikon kecil di tab browser (favicon) mungkin tidak muncul jika Anda membuka file `index.html` langsung dari komputer (file://). Favicon akan muncul setelah aplikasi diunggah ke GitHub Pages (https://).
+- **Penyimpanan:** Skor dan level yang terbuka disimpan di `localStorage` browser. Jika siswa me-refresh halaman, mereka tidak perlu mengulang dari awal.
+- **Cetak Hasil:** Di halaman akhir, ada tombol "Cetak Hasil" yang akan membuka dialog print browser. Siswa dapat menyimpannya sebagai PDF atau mencetaknya untuk dikumpulkan.
+- **Easter Egg:** Jika siswa mendapatkan skor sempurna (1000), akan muncul animasi konfeti!
