@@ -53,6 +53,22 @@ body {
     padding: 2px;
 }
 
+#logo-fallback {
+    display: none;
+    width: 40px;
+    height: 40px;
+    background: white;
+    border-radius: 50%;
+    color: var(--color-primary);
+    font-weight: bold;
+    font-size: 9px;
+    text-align: center;
+    line-height: 1.1;
+    align-items: center;
+    justify-content: center;
+    padding: 2px;
+}
+
 #app-title {
     font-size: 1.2rem;
     font-weight: 800;
@@ -264,10 +280,27 @@ body {
     font-weight: bold;
 }
 
-/* Buttons */
-.btn-primary, .btn-secondary {
-    display: block;
-    width: 100%;
+.sortable-item.selected {
+    border-color: var(--color-primary);
+    background-color: #DBEAFE;
+}
+.sortable-item.correct {
+    border-color: var(--color-success);
+    background-color: #D1FAE5;
+}
+.sortable-item.wrong {
+    border-color: var(--color-danger);
+    background-color: #FEE2E2;
+}
+
+/* Button Group */
+.button-group {
+    display: flex;
+    gap: 10px;
+    margin-top: 1rem;
+}
+
+.btn-primary, .btn-secondary, .btn-hint {
     padding: 1rem;
     border: none;
     border-radius: 8px;
@@ -279,6 +312,7 @@ body {
 }
 
 .btn-primary {
+    flex: 2;
     background-color: var(--color-primary);
     color: var(--color-white);
 }
@@ -292,7 +326,19 @@ body {
     cursor: not-allowed;
 }
 
+.btn-hint {
+    flex: 1;
+    background-color: #FEF3C7;
+    color: #D97706;
+    border: 2px solid #F59E0B;
+}
+
+.btn-hint:hover {
+    background-color: #FDE68A;
+}
+
 .btn-secondary {
+    width: 100%;
     background-color: var(--color-secondary);
     color: var(--color-primary);
     margin-top: 1rem;
@@ -377,6 +423,7 @@ body {
     max-width: 400px;
     position: relative;
     animation: slideDown 0.3s ease-out;
+    border-left: 5px solid var(--color-secondary);
 }
 
 .close-modal {
